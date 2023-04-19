@@ -5,8 +5,8 @@ const generate_token = require('../authentication/generate_token')
 module.exports = async function register(req , res) {
     try {
       const dbo = client.db('medirider')
-      const ambulance = dbo.collection('user')
-      const result = await ambulance.insertOne(req.body);
+      const user = dbo.collection('user')
+      const result = await user.insertOne(req.body);
       const token = await generate_token(result.insertedId.toString() , 'user')
       res.json({
         message:"success",

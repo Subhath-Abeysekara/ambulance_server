@@ -5,6 +5,8 @@ var cors = require('cors')
 var path = require('path')
 const dotenv = require('dotenv');
 const ambulanceRouter = require('./routes/ambulance_router')
+const userRouter = require('./routes/user_router')
+const authRouter = require('./routes/auth_router')
 const connection = require('./service/connect')
 dotenv.config();
 
@@ -46,6 +48,8 @@ app.use(bodyparser.json())
 app.use(express.static(path.join(__dirname,'public')))
 
 app.use('/api/ambulance',ambulanceRouter)
+app.use('/api/user',userRouter)
+app.use('/api/auth',authRouter)
 
 app.listen(process.env.PORT,()=>{
     console.log('server started in port : ',process.env.PORT)

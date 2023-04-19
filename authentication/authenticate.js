@@ -16,18 +16,20 @@ const obj ={
 } 
 
 function check_authorization(api_no , user_type){
+    var value = false
     const availability = new Promise((resolve) => {
         var newArray = obj.api_access_list.filter(function (el)
     { 
         if(el.api_no == api_no ){
-            console.log(user_type)
-            console.log(el.user_types.includes(user_type))
-            resolve(el.user_types.includes(user_type) )      
+            resolve(el.user_types.includes(user_type) )
+            value = el.user_types.includes(user_type)
+            return
+
         }
     }
     );
     })
-    return availability 
+    return value 
 }
 
 function getDecode(req){
@@ -80,9 +82,17 @@ module.exports =async function authenticate(req , api_no){
     if(response.verified){
         var condition =await check_authorization(api_no , response.token.userType)
         console.log("condition ",condition)
-        return {
-            "condition" : true,
-            "userId" : response.token.userId
+        if(condition){
+            return {
+                "condition" : true,
+                "userId" : response.token.userId
+            }
+        }
+        else{
+            return {
+                "condition" : false,
+                "userId" : null
+            }
         }
     }
     return {
