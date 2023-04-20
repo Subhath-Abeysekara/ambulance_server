@@ -10,22 +10,25 @@ module.exports = async function register(req , res) {
         name:req.body.name
      });
      let availability = false
+     let user_id = ""
      await result.forEach(element => {
-       availability = true
+        console.log(element)
+       if(element.password==req.body.password){
+        availability = true
+        user_id = element._id.toString
+       }
      });
-      if(!availability){
-        const result2 = await user.insertOne(req.body);
-      const token = await generate_token(result.insertedId.toString() , 'user')
+     if(availability){
+      const token = await generate_token(user_id.toString() , 'user')
       res.json({
         message:"success",
-        insert_id:result2.insertedId,
         token:token
       })
       }
       else{
         res.json({
           message:"rejected",
-          error:"username is already available"
+          error:"error username or password"
         })
       }
     } 

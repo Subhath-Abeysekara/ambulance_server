@@ -7,10 +7,15 @@ const acceptBooking = require('../ambulance/acceptBooking')
 const pickupBooking = require('../ambulance/pickupBooking')
 const droppBokking = require('../ambulance/droppBooking')
 const rejectBooking = require('../ambulance/rejectBooking')
+const login = require('../ambulance/login')
 
 router.post('/register' , (req,res,next)=>{
     register(req , res)
  })
+
+ router.post('/login' , (req,res,next)=>{
+   login(req , res)
+})
 
  router.get('/getBoookings' , (req,res,next)=>{
     getBookings(req , res)

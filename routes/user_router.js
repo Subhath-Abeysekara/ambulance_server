@@ -4,10 +4,15 @@ const register = require('../user/register')
 const getAvailables = require('../user/getAvailableAmbulances')
 const addBokking = require('../user/addBooking')
 const getBoookings = require('../user/getBookings')
+const login = require('../user/login')
 
 router.post('/register' , (req,res,next)=>{
     register(req, res)
  })
+
+ router.post('/login' , (req,res,next)=>{
+   login(req, res)
+})
 
  router.get('/getAvailables' , (req,res,next)=>{
     getAvailables(req, res)

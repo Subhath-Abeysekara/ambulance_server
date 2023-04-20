@@ -5,27 +5,29 @@ const generate_token = require('../authentication/generate_token')
 module.exports = async function register(req , res) {
     try {
       const dbo = client.db('medirider')
-      const user = dbo.collection('user')
+      const user = dbo.collection('ambulance')
       const result = await user.find({
         name:req.body.name
      });
      let availability = false
+     let user_id = ""
      await result.forEach(element => {
-       availability = true
+       if(element.password==req.body.password){
+        availability = true
+        user_id = element._id.toString
+       }
      });
-      if(!availability){
-        const result2 = await user.insertOne(req.body);
-      const token = await generate_token(result.insertedId.toString() , 'user')
+     if(availability){
+      const token = await generate_token(user_id.toString() , 'ambulance')
       res.json({
         message:"success",
-        insert_id:result2.insertedId,
         token:token
       })
       }
       else{
         res.json({
           message:"rejected",
-          error:"username is already available"
+          error:"error username or password"
         })
       }
     } 

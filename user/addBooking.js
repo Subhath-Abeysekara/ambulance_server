@@ -21,7 +21,12 @@ catch{
       const booking = dbo.collection('booking')
       const ambulance = dbo.collection('ambulance')
       req.body['user_id'] = validity.userId
-      const result = await booking.insertOne(req.body);
+      const findResult = await ambulance.findOne(
+        {
+          '_id': new ObjectId(req.body.ambulance_id)
+        });
+      if(findResult.availability){
+        const result = await booking.insertOne(req.body);
       const result2 = await ambulance.updateOne({
         '_id': new ObjectId(req.body.ambulance_id)
       },
@@ -34,6 +39,13 @@ catch{
         message:"success",
         insert_id:result.insertedId,
       })
+      }
+      else{
+        res.json({
+          message:"rejected",
+          error:"ambulance has already booked"
+        })
+      }
     } 
     catch{
       console.log("error operation")
