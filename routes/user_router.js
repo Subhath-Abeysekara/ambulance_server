@@ -14,7 +14,7 @@ router.post('/register' , (req,res,next)=>{
    login(req, res)
 })
 
- router.get('/getAvailables' , (req,res,next)=>{
+ router.post('/getAvailables' , (req,res,next)=>{
     getAvailables(req, res)
  })
 

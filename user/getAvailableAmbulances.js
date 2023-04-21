@@ -1,5 +1,6 @@
 const client = require('../service/service')
 const validate_token = require('../authentication/authenticate')
+const catculate = require('./calculate_distance')
 
 module.exports = async function getAvailables(req , res) {
   try{
@@ -22,9 +23,14 @@ catch{
          availability:true
       });
       var response = []
-      await result.forEach(element => {
+      await result.forEach(async element => {
         console.log(element)
-        response.push(element)
+        const values = await catculate(req.body.latitude,req.body.longitude)
+        const res_body = {
+          ambulance_data:element,
+          map_data:values
+        }
+        response.push(res_body)
       });
       res.json({
         message:"success",
