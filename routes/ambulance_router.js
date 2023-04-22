@@ -12,11 +12,7 @@ const login = require('../ambulance/login')
 router.post('/register' , (req,res,next)=>{
     register(req , res)
  })
-
- router.post('/login' , (req,res,next)=>{
-   login(req , res)
-})
-
+ 
  router.get('/getBoookings' , (req,res,next)=>{
     getBookings(req , res)
  })

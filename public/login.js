@@ -11,18 +11,21 @@ module.exports = async function login(req , res) {
      });
      let availability = false
      let user_id = ""
+     let role = ""
      await result.forEach(element => {
         console.log(element)
        if(element.password==req.body.password){
         availability = true
         user_id = element.ref_id
+        role = element.role
        }
      });
      if(availability){
-      const token = await generate_token(user_id.toString() , 'user')
+      const token = await generate_token(user_id.toString() , role)
       res.json({
         message:"success",
-        token:token
+        token:token,
+        role:role
       })
       }
       else{

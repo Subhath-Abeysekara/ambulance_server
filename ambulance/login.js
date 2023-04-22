@@ -5,8 +5,8 @@ const generate_token = require('../authentication/generate_token')
 module.exports = async function register(req , res) {
     try {
       const dbo = client.db('medirider')
-      const user = dbo.collection('ambulance')
-      const result = await user.find({
+      const auth = dbo.collection('auth')
+      const result = await auth.find({
         name:req.body.name
      });
      let availability = false
@@ -14,7 +14,7 @@ module.exports = async function register(req , res) {
      await result.forEach(element => {
        if(element.password==req.body.password){
         availability = true
-        user_id = element._id.toString
+        user_id = element.ref_id
        }
      });
      if(availability){

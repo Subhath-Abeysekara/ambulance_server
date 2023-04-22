@@ -10,10 +10,6 @@ router.post('/register' , (req,res,next)=>{
     register(req, res)
  })
 
- router.post('/login' , (req,res,next)=>{
-   login(req, res)
-})
-
  router.post('/getAvailables' , (req,res,next)=>{
     getAvailables(req, res)
  })
