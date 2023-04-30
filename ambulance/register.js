@@ -20,6 +20,7 @@ module.exports = async function register(req , res) {
         password : req.body.password,
         role:"ambulance"
       }
+      req.body.availability = true
       delete req.body.name
       delete req.body.password
       const result2 = await ambulance.insertOne(req.body);
