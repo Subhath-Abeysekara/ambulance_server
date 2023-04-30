@@ -19,13 +19,23 @@ catch{
     try {
       const dbo = client.db('medirider')
       const ambulance = dbo.collection('ambulance')
+      let latitude = 0
+        let longitude = 0
+      if("latitude" in req.body && "longitude" in req.body){
+         latitude = req.body.latitude
+         longitude = req.body.longitude
+      }
+      else{
+           latitude=6.0329,
+           longitude=80.2168
+      }
       const result = await ambulance.find({
          availability:true
       });
       var response = []
       await result.forEach(async element => {
         console.log(element)
-        const values = await catculate(req.body.latitude,req.body.longitude)
+        const values = await catculate(latitude,longitude)
         const res_body = {
           ambulance_data:element,
           map_data:values
