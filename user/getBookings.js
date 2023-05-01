@@ -21,14 +21,40 @@ catch{
       const result = await booking.find({
          user_id:validity.userId
       });
-      var response = []
+      var ongoing = []
+      var pending = []
+      var dropped = []
+      var rejected = []
+      var accepted = []
       await result.forEach(element => {
         console.log(element)
-        response.push(element)
+        switch (element.state){
+          case "pending":
+            pending.push(element)
+            break
+          case "ongoing":
+            ongoing.push(element)
+            break
+          case "rejected":
+            rejected.push(element)
+            break
+          case "dropped":
+            dropped.push(element)
+            break
+          case "accepted":
+            accepted.push(element)
+            break
+        }
       });
       res.json({
         message:"success",
-        body:response
+        body:{
+          ongoing,
+          pending,
+          accepted,
+          rejected,
+          dropped
+        }
       })
     } 
     catch{

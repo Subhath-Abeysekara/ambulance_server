@@ -4,7 +4,9 @@ const register = require('../user/register')
 const getAvailables = require('../user/getAvailableAmbulances')
 const addBokking = require('../user/addBooking')
 const getBoookings = require('../user/getBookings')
-const login = require('../user/login')
+const getBookingByID = require('../user/getBookingByID')
+const cancel_booking = require('../user/cancelBooking')
+
 
 router.post('/register' , (req,res,next)=>{
     register(req, res)
@@ -21,5 +23,13 @@ router.post('/register' , (req,res,next)=>{
  router.get('/getBookings' , (req,res,next)=>{
     getBoookings(req, res)
  })
+
+ router.get('/getBookingById/:booking_id' , (req,res,next)=>{
+   getBookingByID(req, res)
+})
+
+ router.delete('/cancelBooking/:booking_id' , (req,res,next)=>{
+   cancel_booking(req, res)
+})
 
  module.exports = router
