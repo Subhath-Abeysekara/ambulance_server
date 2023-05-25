@@ -8,6 +8,7 @@ const ambulanceRouter = require('./routes/ambulance_router')
 const userRouter = require('./routes/user_router')
 const authRouter = require('./routes/auth_router')
 const connection = require('./service/connect')
+const kaijuRouter = require('./routes/kaijuRouter')
 dotenv.config();
 
 var app = express();
@@ -50,6 +51,7 @@ app.use(express.static(path.join(__dirname,'public')))
 app.use('/api/ambulance',ambulanceRouter)
 app.use('/api/user',userRouter)
 app.use('/api/auth',authRouter)
+app.use('/api/common',kaijuRouter)
 
 app.listen(process.env.PORT,()=>{
     console.log('server started in port : ',process.env.PORT)
